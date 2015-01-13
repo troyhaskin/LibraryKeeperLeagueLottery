@@ -1,19 +1,40 @@
 (function(){
     "use strict";
     Array.prototype.sum = function () {
-        return this.reduce( function (previous,current) {
-            return previous + current;
-        }, 0);
+        var compen  = 0,
+            naive   = 0,
+            shifted = 0,
+            sum     = 0;
+        
+        // Kahan Algorithm
+        this.forEach ( function (current,index) {
+            shifted = current - compen;
+            naive   = sum + shifted;
+            compen  = (naive - sum) - shifted;
+            sum     = naive;
+        });
+        
+        return sum;
     };
     
     Array.prototype.cumsum = function () {
         var accumulator = [];
         accumulator.push(0.0);
-    
-        this.forEach( function (current,index) {
-            accumulator.push(accumulator[index] + current);
+
+        var compen  = 0,
+            naive   = 0,
+            shifted = 0,
+            sum     = 0;
+        
+        // Kahan Algorithm
+        this.forEach ( function (current,index) {
+            shifted = current - compen;
+            naive   = sum + shifted;
+            compen  = (naive - sum) - shifted;
+            sum     = naive;
+            accumulator.push(sum);
         });
-    
+        
         return accumulator;
     };
     

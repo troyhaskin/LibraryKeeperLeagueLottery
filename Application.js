@@ -2,13 +2,30 @@
 
     "use strict";
     
+    
+    
+    
+    
+    
+    
+    
     return true;
 
 }());
 
 
-var LibraryLeague = Object.create(League);
+var theLibraryKeeper = Object.create(League);
 
-LibraryLeague.addTeam("Madison SkyShine","Troy Haskin",4,9);
-LibraryLeague.addTeam("Picture of Boobs","Stephani Dalbesio",12,2);
-LibraryLeague.addTeam("Zust More Boobs" ,"Myla Dalbesio",12,2);
+theLibraryKeeper.addTeam("Madison SkyShine","Troy Haskin",4,9);
+theLibraryKeeper.addTeam("Picture of Boobs","Stephani Dalbesio",12,2);
+theLibraryKeeper.addTeam("Zust More Boobs" ,"Myla Dalbesio",12,2);
+
+
+var b = {
+    a: "a",
+    b:"b"
+};
+
+b = {
+    c: "c"
+};

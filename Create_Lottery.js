@@ -2,26 +2,39 @@ var Lottery = (function MakeLottery() {
 
     "use strict";
 
-    var Lottery = Object.create(null);
-    
-    Lottery.prng           = uheprng();
-    
-    Lottery.percentages    = [];
-    
-    
-    Object.defineProperty(Lottery,"cummulativePercentages",{
-        enumerable: true,
-        get: function () {
-            var cummulative = [];
-            cummulative.push(0.0);
-        
-            Lottery.percentages.forEach(function(curr,k,arr){
-                cummulative.push(cummulative[k] + curr);
-            });
-        
-            return cummulative;
+    var percentageArray = [];
+    var Lottery = Object.create(null,{
+        prng: {
+            value: uheprng(),
+            enumerable: true,
+            writable: false,
+            configurable: false
+        },
+        percentages : {
+            enumerable: true,
+            set: function (array) {
+                var total = array.sum();
+                
+                if (Math.abs(1 - total) > 2.220446049250313e-16) {
+                    array.forEach( function (current,index,arr) {
+                        arr[index] = current/total;
+                    });
+                }
+                
+                percentageArray = array;
+            },
+            get: function () {
+                return percentageArray;
+            }
+        },
+        cummulativePercentages : {
+            enumerable: true,
+            get: function () {
+                return percentageArray.cumsum();
+            }
         }
     });
+   
 
     Lottery.sample = function(){
     

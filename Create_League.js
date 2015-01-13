@@ -2,86 +2,27 @@ var League = (function () {
 
     "use strict";
 
-
-    var Team = Object.create(null, {
-        Name: {
-            value: "",
+    
+    // Start the League object
+    var League = Object.create(null, {
+        team: {
+            value: {},
+            writable: true,
             configurable: false,
-            enumerable:   true,
-            writable:     true
+            enumerable: true
         },
-        Owner: {
-            value: "",
-            configurable: false,
-            enumerable:   true,
-            writable:     true
-        },
-        Wins: {
-            value: 0,
-            configurable: false,
-            enumerable:   true,
-            writable:     true
-        },
-        Losses: {
-            value: 0,
-            configurable: false,
-            enumerable:   true,
-            writable:     true
-        },
-        Ties: {
-            value: 0,
-            configurable: false,
-            enumerable:   true,
-            writable:     true
-        },
-        Record: {
-            enumerable:   true,
+        teams: {
+            enumerable: true,
             get: function () {
-            
-                var Record = this.Wins + "-" + this.Losses;
-                
-                if (this.Ties > 0) {
-                    Record = Record + "-" + this.Ties;
-                }
-                
-                return (this.Wins.toString() + "-" + this.Losses.toString());
-            },
-            set: function (Record) {
-            
-                if ((typeof Record) === "string") {
-                
-                    var WinLoss = Record.split(/[^0-9]+/);                  
-                    this.Wins   = parseInt(WinLoss[0],10);
-                    this.Losses = parseInt(WinLoss[1],10);
-                    
-                    if (WinLoss.length > 2) {
-                        this.Ties = parseInt(WinLoss[2],10);
-                    }
-
-                }
+                return Object.keys(this.team);
             }
         }
     });
-    Object.seal(Team);
-    
 
     
-    
-    
 
-    /*
-        Begin League object creation
-    */
-    var League = Object.create(null);
-
-
-    // Associative array to hold all teams
-    League.team = Object.create(null); 
-
-
-
-    // *Private* function for creating sort methods
-    var makeTeamNameSort = function (property) {
+    // Function for creating sort methods
+    League.makeTeamNameSort = function (property) {
         return function (Ascending) {
 
             if (Ascending === undefined || Ascending === true) {
@@ -90,10 +31,10 @@ var League = (function () {
                 var flip = -1;
             }
             
-            var sortArray = Object.keys(League.team).map(function (teamName) {
+            var sortArray = Object.keys(this.team).map(function (teamName) {
                 return {
                     name: teamName,
-                    sortProperty: League.team[teamName][property]
+                    sortProperty: this.team[teamName][property]
                 };
             });
             
@@ -123,17 +64,17 @@ var League = (function () {
     };
     
     
-    // Concrete sort methods: return team names in a sorted array
-    League.sortedByWins   = makeTeamNameSort("Wins");
-    League.sortedByLosses = makeTeamNameSort("Losses");
-    League.sortedByTies   = makeTeamNameSort("Ties");
+    //  Concrete sort methods: return team names in a sorted array
+    League.teamsByWins   = League.makeTeamNameSort("Wins");
+    League.teamsByLosses = League.makeTeamNameSort("Losses");
+    League.teamsByTies   = League.makeTeamNameSort("Ties");
     
-    // Names are different
-    League.sortedByName = function (Ascending) {
+    // Name sorting is different
+    League.teamsByName = function (Ascending) {
         if (Ascending === undefined || Ascending === true) {
-            return Object.keys(League.team).sort();
+            return Object.keys(this.team).sort();
         } else {
-            return Object.keys(League.team).sort().reverse();
+            return Object.keys(this.team).sort().reverse();
         }
     };
     
@@ -141,8 +82,7 @@ var League = (function () {
     League.addTeam = function (Name /*,Owner,Wins,Losses,Ties*/) {
     
         // Populate new Team instance
-        var newTeam    = Object.create(Team);
-        newTeam.Name   = Name;
+        var newTeam = Object.create(Team);
     
 
         var ArgumentOrder = ["Owner","Wins","Losses","Ties"];
@@ -152,7 +92,6 @@ var League = (function () {
             }
         }
         
-        // Push team to needed places
         League.team[Name] = newTeam;
         
         return true;
