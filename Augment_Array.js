@@ -37,24 +37,17 @@
         
         return accumulator;
     };
-    
-    
-    Array.prototype.shuffle = function () {
+
+    Array.prototype.shuffle = function ( /* Entropy sources */) {
         var array        = this             ,
             currentIndex = array.length-1   ,
-            prng         = uheprng()        ,
             swapIndex    = 0                ,
             swapValue    = 0                ; 
-            
-        // Add entropy the prng
-        array.forEach( function (current,index) {
-            prng.addEntropy(current,index);
-        });
             
         while (0 !== currentIndex) {
         
             // Get random swap index
-            swapIndex = prng.range(currentIndex);
+            swapIndex = Math.floor(Math.random() * currentIndex);
             currentIndex -= 1;
             
             // Swap values
