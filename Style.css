@@ -1,0 +1,69 @@
+* {
+    overflow: auto;
+    opacity: inherit;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    font-size: 100%;
+    opacity: 1.0;
+}
+
+
+input,div {
+    font-size: 97%;
+}
+
+div.Team {
+    margin-bottom:0.50em;
+}
+div.BlankTeam {
+    display: none;
+}
+
+div.Team > input:not([name="TeamName"]) {
+    text-align: center;
+}
+
+/* Fix button widths; used for positioning headers*/
+input[name="AddTeam"], input[name="RemoveTeam"]{
+    width:  2em;
+}
+input[name="TeamName"], div#TeamName {
+    width: 16em;
+}
+div#TeamName {
+    padding-left: 0.1em;
+}
+input[name="DraftPick"], div#DraftPick {
+    width: 4em;
+    text-align: center;
+}
+input[name="InLottery"], div#InLottery {
+    width: 5em;
+    text-align: center;
+}
+input[name="PickChance"], div#PickChance {
+    width: 5em;
+    padding: 0 auto;
+    text-align: center;
+}
+div.Label {
+    float:left;
+    font-weight:bold;
+}
+
+div.InputHeaders > span {
+    font-weight:bold;
+}
+div#InLottery {
+    text-align: center;
+}
+
+div.ColumnHeader {
+    text-align: center;
+    font-weight: bold;
+    font-size:130%;
+    margin-bottom: 0.20em;
+}
