@@ -1,10 +1,10 @@
-var League = (function () {
+function League() {
 
     "use strict";
 
     
     // Start the League object
-    var League = Object.create(null, {
+    var league = Object.create(null, {
         team: {
             value: {},
             writable: true,
@@ -22,23 +22,37 @@ var League = (function () {
     
 
     // Function for creating sort methods
-    League.makeTeamNameSort = function (property) {
+    league.makeTeamNameSort = function (property,comparator) {
+        
+        var that = this;
+        var flip = 0;
+    
         return function (Ascending) {
-
             if (Ascending === undefined || Ascending === true) {
-                var flip = 1;
+                flip =  comparator || 1;
             } else {
-                var flip = -1;
+                flip = -comparator || -1;
             }
             
-            var sortArray = Object.keys(this.team).map(function (teamName) {
+            var sortArray = Object.keys(that.team).map(function (teamName) {
+                var prop;
+
+                if (property.constructor !== Array) {
+                    prop = that.team[teamName][property];
+                } else {
+                    prop = that.team[teamName];
+                    property.forEach( function (element){
+                        prop = prop[element];
+                    });
+                }
+
                 return {
                     name: teamName,
-                    sortProperty: this.team[teamName][property]
+                    sortProperty: prop
                 };
             });
             
-            sortArray.sort(function(a,b){
+            sortArray.sort(function(a,b) {
                 
                 // Main Comparison
                 if (a.sortProperty > b.sortProperty) {
@@ -63,14 +77,16 @@ var League = (function () {
         };
     };
     
-    
     //  Concrete sort methods: return team names in a sorted array
-    League.teamsByWins   = League.makeTeamNameSort("Wins");
-    League.teamsByLosses = League.makeTeamNameSort("Losses");
-    League.teamsByTies   = League.makeTeamNameSort("Ties");
+    league.teamsByWins      = league.makeTeamNameSort("wins");
+    league.teamsByLosses    = league.makeTeamNameSort("losses");
+    league.teamsByTies      = league.makeTeamNameSort("ties");
+    league.teamsByDraftPick = league
+        .makeTeamNameSort(["draftInformation","draftPick"],-1);
+    
     
     // Name sorting is different
-    League.teamsByName = function (Ascending) {
+    league.teamsByName = function (Ascending) {
         if (Ascending === undefined || Ascending === true) {
             return Object.keys(this.team).sort();
         } else {
@@ -79,25 +95,26 @@ var League = (function () {
     };
     
     
-    League.addTeam = function (Name /*,Owner,Wins,Losses,Ties*/) {
+    league.addTeam = function (name /*,Owner,Wins,Losses,Ties*/) {
     
         // Populate new Team instance
-        var newTeam = Object.create(Team);
+        var newTeam = Team();
     
 
-        var ArgumentOrder = ["Owner","Wins","Losses","Ties"];
+        var ArgumentOrder = ["owner","wins","losses","ties"];
         for (var k = 1; k < arguments.length; k++) {
             if ( arguments[k] !== undefined ) {
                 newTeam[ArgumentOrder[k-1]] = arguments[k];
             }
         }
         
-        League.team[Name] = newTeam;
+        this.team[name] = newTeam;
         
         return true;
         
     };
+    Object.seal(league);
 
-    return League;
+    return league;
 
-}());
+}

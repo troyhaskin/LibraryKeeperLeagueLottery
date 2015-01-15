@@ -7,6 +7,7 @@
         <script type="text/javascript" src="./uheprng.js"          defer ></script>
         <script type="text/javascript" src="./jquery-2.1.3.min.js" defer ></script>
         <script type="text/javascript" src="./Augment_Array.js"    defer ></script>
+        <script type="text/javascript" src="./Create_DraftInformation.js"      defer ></script>
         <script type="text/javascript" src="./Create_Team.js"      defer ></script>
         <script type="text/javascript" src="./Create_League.js"    defer ></script>
         <script type="text/javascript" src="./Create_Lottery.js"   defer ></script>
@@ -48,13 +49,14 @@
             </div>
         </div>
         
-        <div class="Column" id="Lottery" style="pointer-events:none;">
+        <div class="Column" id="Lottery">
+            <div class="Overlay" style="height: 100%;"></div>
             <div class="Header">
                 Draft Lottery
                <div style="width:100%;height:0.1em;background-color:black;">
             </div>
             </div>
-            <input type="button" id="PerformLottery" value="Perform Draft Lottery" title="Run draft lottery" style="display:none;"/>
+            <input type="button" id="PerformLottery" value="Perform Draft Lottery" title="Invalid draft information for lottery." disabled="disabled"/>
             <div id="PreLotteryInformation" style="display:none;">
             </div>
         </div>

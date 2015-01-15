@@ -1,62 +1,67 @@
-var Team = (function () {
+function Team() {
 
     "use strict";
 
-
-    var Team = Object.create(null, {
-        Owner: {
+    var team = Object.create(null, {
+        owner: {
             value: "",
             configurable: false,
             enumerable:   true,
             writable:     true
         },
-        Wins: {
+        wins: {
             value: 0,
             configurable: false,
             enumerable:   true,
             writable:     true
         },
-        Losses: {
+        losses: {
             value: 0,
             configurable: false,
             enumerable:   true,
             writable:     true
         },
-        Ties: {
+        ties: {
             value: 0,
             configurable: false,
             enumerable:   true,
             writable:     true
         },
-        Record: {
+        record: {
             enumerable:   true,
             get: function () {
             
-                var Record = this.Wins + "-" + this.Losses;
+                var record = this.wins + "-" + this.losses;
                 
-                if (this.Ties > 0) {
-                    Record = Record + "-" + this.Ties;
+                if (this.ties > 0) {
+                    record = record + "-" + this.ties;
                 }
                 
-                return (this.Wins.toString() + "-" + this.Losses.toString());
+                return (this.wins.toString() + "-" + this.losses.toString());
             },
-            set: function (Record) {
+            set: function (record) {
             
-                if ((typeof Record) === "string") {
+                if ((typeof record) === "string") {
                 
-                    var WinLoss = Record.split(/[^0-9]+/);                  
-                    this.Wins   = parseInt(WinLoss[0],10);
-                    this.Losses = parseInt(WinLoss[1],10);
+                    var winLoss = Record.split(/[^0-9]+/);                  
+                    this.wins   = parseInt(winLoss[0],10);
+                    this.losses = parseInt(winLoss[1],10);
                     
-                    if (WinLoss.length > 2) {
-                        this.Ties = parseInt(WinLoss[2],10);
+                    if (winLoss.length > 2) {
+                        this.ties = parseInt(winLoss[2],10);
                     }
 
                 }
             }
+        },
+        draftInformation: {
+            value:        new DraftInformation(),
+            configurable: false,
+            enumerable:   true,
+            writable:     false
         }
     });
-    Object.seal(Team);
+    Object.seal(team);
     
-    return Team;
-}());
+    return team;
+}

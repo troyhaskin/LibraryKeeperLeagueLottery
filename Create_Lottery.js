@@ -1,9 +1,9 @@
-var Lottery = (function MakeLottery() {
+function Lottery() {
 
     "use strict";
 
     var percentages = [];
-    var Lottery = Object.create(null,{
+    var lottery = Object.create(null,{
         prng: {
             value: uheprng(),
             enumerable: true,
@@ -38,11 +38,11 @@ var Lottery = (function MakeLottery() {
     
     // Add some initial entropy to this prng
     for (var k = 0; k < 50; k ++ ) {
-        Lottery.prng.addEntropy(Math.random());
+        lottery.prng.addEntropy(Math.random());
     }
    
 
-    Lottery.performDrawingWithoutReplacement = function (shuffle) {
+    lottery.performDrawingWithoutReplacement = function (shuffle) {
     
         var nSamples = 0,
             work     = percentages,
@@ -97,7 +97,7 @@ var Lottery = (function MakeLottery() {
     }
     
     
-    Lottery.verifySampling = function (n,shuffle) {
+    lottery.verifySampling = function (n,shuffle) {
         if(n === undefined) {
             n = 100;
         }
@@ -120,25 +120,10 @@ var Lottery = (function MakeLottery() {
         });
         
     }
-
-    return Lottery;
     
-}());
+    Object.seal(lottery);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return lottery;
+    
+}
 

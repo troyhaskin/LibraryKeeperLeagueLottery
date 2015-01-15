@@ -86,3 +86,23 @@ div.Team input[name="PickChance"], div#PickChance {
     text-align: center;
 }
 
+
+
+/*  *************************************
+             Lottery Column
+    ************************************* */
+div#Lottery {
+    position: relative;
+}
+div#Lottery div.Overlay {
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: rgba(255,255,255,0.8);
+}
+    
+    
+    
+

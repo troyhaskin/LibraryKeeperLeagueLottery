@@ -2,8 +2,8 @@
 
     "use strict";
     
-    var theLibraryKeeper  = Object.create(League);
-    var theLibraryLottery = Object.create(Lottery);
+    var theLibraryKeeper  = League();
+    var theLibraryLottery = Lottery();
     
     (function ($){
     
@@ -52,8 +52,7 @@
             
                 // Show PickChance header and Activate draft column
                 $("div#PickChance").css("color","");
-                $("div#DraftColumn").css("pointer-events","");
-                $("div#DraftColumn > div.ColumnHeader").css("opacity",1);
+                $("div#Lottery > div.Overlay").css("height","0%");
                 
             }
 
@@ -61,26 +60,34 @@
                 
                 // Dull PickChance header and Deactivate draft column
                 $("div#PickChance").css("color","rgba(0,0,0,0.1)");
-                $("div#DraftColumn").css("pointer-events","none");
-                $("div#DraftColumn > div.ColumnHeader").css("opacity",0.1);
+                $("div#Lottery > div.Overlay").css("height","100%");
             }
 
         });
         
         
         /* *************************************
-            Handle the lottery participants 
-            and activate draft column.
+
            ************************************* */
-        $("[name='TeamName']").blur(function (event) {
+        function checkForDraftReadyStatus () {
+        };
+        
+        $("[name='TeamName']").blur(function () {
             var TeamName   = $(this).val().trim(),
-                PickChance = $(this).siblings("[name='PickChance']").val();
+                PickChance = parseInt($(this).siblings("[name='PickChance']").val());
             
-            $(this).parent().attr("id",$(TeamName.replace(/\s/g,'-')));
-            
-            if (PickChance != '') {
-                TeamName = '<div>'+TeamName + ' ' + PickChance + '</div>';
-                $(TeamName).appendTo("div#PreLotteryInformation");
+            if ( '' !== TeamName) {
+                $(this).parent().attr("id",TeamName.replace(/\s/g,'-'));
+
+                
+                //
+                if (!isNaN(PickChance) && 
+                    PickChance >= 0    && 
+                    PickChance <= 1) {
+                    
+                    
+                }
+
             }
         });
 
@@ -119,5 +126,13 @@
 }());
 
 
+var theLibraryKeeper = League();
+theLibraryKeeper.addTeam("Madison SkyShine","Troy Haskin",4,9);
+theLibraryKeeper.addTeam("Picture of Boobs","Stephani Dalbesio",12,2);
+theLibraryKeeper.addTeam("Zust More Boobs" ,"Myla Dalbesio",12,2);
 
+
+theLibraryKeeper.team["Madison SkyShine"].draftInformation.draftPick = 1;
+theLibraryKeeper.team["Picture of Boobs"].draftInformation.draftPick = 3;
+theLibraryKeeper.team["Zust More Boobs"].draftInformation.draftPick = 2;
 
