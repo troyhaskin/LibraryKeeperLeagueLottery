@@ -1,69 +1,88 @@
 * {
     overflow: auto;
-    opacity: inherit;
 }
 
 html {
     width: 100%;
     height: 100%;
     font-size: 100%;
-    opacity: 1.0;
+}
+
+body {
+    width: 95%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+body, body * {
+    font-size: 98%;
 }
 
 
-input,div {
-    font-size: 97%;
+
+/*  *************************************
+                   Columns
+    ************************************* */
+div#Information , div#Lottery {
+    width:49%;
+}
+div#Information{
+    float:left;
+}
+
+div#Lottery{
+    float:right;
+}
+div.Header {
+    text-align: center;
+    font-weight: bold;
+    font-size:130%;
+    margin-bottom: 0.20em;
+}
+
+
+
+
+
+/*  *************************************
+             Information Column
+    ************************************* */
+    
+div#Information div.Label {
+    float:left;
+    font-weight:bold;
+}
+
+div#BlankTeam {
+    display: none;
 }
 
 div.Team {
     margin-bottom:0.50em;
-}
-div.BlankTeam {
-    display: none;
 }
 
 div.Team > input:not([name="TeamName"]) {
     text-align: center;
 }
 
-/* Fix button widths; used for positioning headers*/
-input[name="AddTeam"], input[name="RemoveTeam"]{
-    width:  2em;
+div#FirstTeam  input[name="AddTeam"], 
+div.Team           input[name="RemoveTeam"]{
+    width:  7%;
 }
-input[name="TeamName"], div#TeamName {
-    width: 16em;
+div.Team input[name="TeamName"], div#TeamName {
+    width: 45%;
 }
-div#TeamName {
-    padding-left: 0.1em;
-}
-input[name="DraftPick"], div#DraftPick {
-    width: 4em;
+div.Team input[name="DraftPick"], div#DraftPick {
+    width: 8%;
     text-align: center;
 }
-input[name="InLottery"], div#InLottery {
-    width: 5em;
+div.Team input[name="InLottery"], div#InLottery {
+    width: 15%;
     text-align: center;
 }
-input[name="PickChance"], div#PickChance {
-    width: 5em;
+div.Team input[name="PickChance"], div#PickChance {
+    width: 15%;
     padding: 0 auto;
     text-align: center;
 }
-div.Label {
-    float:left;
-    font-weight:bold;
-}
 
-div.InputHeaders > span {
-    font-weight:bold;
-}
-div#InLottery {
-    text-align: center;
-}
-
-div.ColumnHeader {
-    text-align: center;
-    font-weight: bold;
-    font-size:130%;
-    margin-bottom: 0.20em;
-}

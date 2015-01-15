@@ -17,44 +17,46 @@
 
     <body>
         
-        <div  id="LeagueColumn" style="width:49%;float:left;">
-            <div class="ColumnHeader" >
-                Draft Order
-                <div style="width:100%;height:0.3%;background-color:black;"></div>
+        <div class="Column" id="Information">
+            <div class="Header" >
+                Draft Information
+                <div style="width:100%;height:0.1em;background-color:black;"></div>
             </div>
             
-            <div id="League">
+            <div class="Team" id="BlankTeam">
+                <input type="button"   name="RemoveTeam" value="&ndash;" title="Remove this team"/>
+                <input type="text"     name="TeamName"       value=""/>
+                <input type="text"     name="DraftPick"  value=""maxlength="2" />
+                <input type="checkbox" name="InLottery"  value=""maxlength="2" />
+                <input type="text"     name="PickChance" value="" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
+            </div>
+            
+            <div id="TeamList">
                 <div id="InputHeaders">
                     <div class="Label" id="TeamName">Team Name</div>
                     <div class="Label" id="DraftPick">Pick</div>
                     <div class="Label" id="InLottery">In Lottery</div>
-                    <div class="Label" id="PickChance" style="display:none;">Odds</div>
+                    <div class="Label" id="PickChance"  style="color: rgba(0,0,0,0.1);">Odds</div>
                 </div>
-                <div id="FirstTeam">
+                <div class="Team" id="FirstTeam">
                     <input type="button"   name="AddTeam"    value="+" title="Add a team"/>
                     <input type="text"     name="TeamName"   value=""               />
                     <input type="text"     name="DraftPick"  value="" maxlength="2" />
                     <input type="checkbox" name="InLottery"  value="" maxlength="2" />
-                    <input type="text"     name="PickChance" value="" style="display:none;"/>
-                </div>
-                <div class="Team" id="BlankTeam" style="display:none;">
-                    <input type="button"   name="RemoveTeam" value="&ndash;" title="Remove this team"/>
-                    <input type="text"     name="TeamName"       value=""/>
-                    <input type="text"     name="DraftPick"  value=""maxlength="2" />
-                    <input type="checkbox" name="InLottery"  value=""maxlength="2" />
-                    <input type="text"     name="PickChance" value=""style="display:none;"/>
+                    <input type="text"     name="PickChance" value="" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
                 </div>
             </div>
         </div>
         
-        <div id="DraftColumn" style="width:49%;float:right;pointer-events:none;">
-            <div class="ColumnHeader" style="opacity:0.1;">
+        <div class="Column" id="Lottery" style="pointer-events:none;">
+            <div class="Header">
                 Draft Lottery
-               <div style="width:100%;height:0.3%;background-color:black;">
+               <div style="width:100%;height:0.1em;background-color:black;">
             </div>
             </div>
             <input type="button" id="PerformLottery" value="Perform Draft Lottery" title="Run draft lottery" style="display:none;"/>
-            <div id="PreLotteryInformation" style="display:none;"></div>
+            <div id="PreLotteryInformation" style="display:none;">
+            </div>
         </div>
         
     </body>

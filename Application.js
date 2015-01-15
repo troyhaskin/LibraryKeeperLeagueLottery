@@ -8,66 +8,70 @@
     (function ($){
     
         // Margin adjustments for the displayed headers
-        var reMarginDiv = function (id) {
+        var labels = ["TeamName","DraftPick","InLottery","PickChance"];
+        labels.forEach ( function (id) {
             var element = $("div#InputHeaders > div#"+id),
                 labelLeft = $(element).offset().left,
                 inputLeft = $("div#FirstTeam > input[name="+id+"]").offset().left;
             
             $(element).css("margin-left",inputLeft-labelLeft);
-            
-        };
-        var labels = ["TeamName","DraftPick","InLottery"];
-        labels.forEach ( function (id) {
-            reMarginDiv(id);
         });
         
     
     
-        var checkedCount = 0;
+        /* *************************************
+            Handle the lottery participants 
+            and (de)activate draft column.
+           ************************************* */
+        var checkedCount = 0    ;
+        var disableName  = ""   ;
+        var enableName   = ""   ;
         $("[name='InLottery']").click(function (event) {
-            var InLotteryCheckbox = this;
             
-            $(this).siblings("[name='PickChance']").toggle(100, function () {
-                if ($(InLotteryCheckbox).is(":checked")) {
-                    $(InLotteryCheckbox).siblings("[name='DraftPick']").attr("disabled","disabled");
-                    $(InLotteryCheckbox).siblings("[name='DraftPick']").css("background-color","#dddddd");
-                    checkedCount += 1;
-                } else {
-                    $(InLotteryCheckbox).siblings("[name='DraftPick']").removeAttr("disabled");
-                    $(InLotteryCheckbox).siblings("[name='DraftPick']").css("background-color","#ffffff");
-                    checkedCount -= 1;
-                }
+            // Entering or leaving lottery?
+            if ($(this).is(":checked")) {
+                checkedCount += 1           ;
+                disableName  = "DraftPick"  ;
+                enableName   = "PickChance" ;
+            } else {
+                checkedCount -= 1           ;
+                disableName  = "PickChance" ;
+                enableName   = "DraftPick"  ;
+            }
 
-                if (checkedCount === 1) {
+            // Enable/disable appropriate inputs
+            $(this).siblings("[name='"+disableName+"']")
+                .attr("disabled","disabled")
+                .css("background-color","rgba(0,0,0,0.1)");
+            $(this).siblings("[name='"+enableName+"']")
+                .removeAttr("disabled")
+                .css("background-color","");
+            
+
+            if (checkedCount === 1) {
+            
+                // Show PickChance header and Activate draft column
+                $("div#PickChance").css("color","");
+                $("div#DraftColumn").css("pointer-events","");
+                $("div#DraftColumn > div.ColumnHeader").css("opacity",1);
                 
-                    // Show PickChance column and resize once
-                    $("div#PickChance").show(100, function () {
-                        if (undefined !== reMarginDiv) {
-                            reMarginDiv("PickChance");
-                            reMarginDiv = function (){}; // We're done with this function
-                        }
-                    });
+            }
 
-                    
-                    // Activate draft 
-                    $("input#PerformLottery").show(100);
-                    $("div#DraftColumn").css("pointer-events","");
-                    $("div#DraftColumn > div.ColumnHeader").css("opacity",1);
-                    
-                }
+            if (0 >= checkedCount) {
+                
+                // Dull PickChance header and Deactivate draft column
+                $("div#PickChance").css("color","rgba(0,0,0,0.1)");
+                $("div#DraftColumn").css("pointer-events","none");
+                $("div#DraftColumn > div.ColumnHeader").css("opacity",0.1);
+            }
 
-                if (0 >= checkedCount) {
-
-                    $("div#PickChance").hide(100);
-                    
-                    // Deactivate draft 
-                    $("input#PerformLottery").hide(100);
-                    $("div#DraftColumn").css("pointer-events","none");
-                    $("div#DraftColumn > div.ColumnHeader").css("opacity",0.1);
-                }
-            });
         });
         
+        
+        /* *************************************
+            Handle the lottery participants 
+            and activate draft column.
+           ************************************* */
         $("[name='TeamName']").blur(function (event) {
             var TeamName   = $(this).val().trim(),
                 PickChance = $(this).siblings("[name='PickChance']").val();
@@ -79,17 +83,27 @@
                 $(TeamName).appendTo("div#PreLotteryInformation");
             }
         });
-        
+
+
+
+        /* *************************************
+                       Remove a team
+           ************************************* */
         $("[name='RemoveTeam']").click(function (event) {
             $(this).parent().remove();
         });
-        
-        var inLotteryWidth = $("div#InLottery").width();
+                
+                
+                
+        /* *************************************
+                         Add a team
+           ************************************* */
         $("[name='AddTeam']").click( function (event) {
-            var newTeam = $("div#BlankTeam").clone(true);
-            newTeam.siblings("[name='InLottery']").width(inLotteryWidth);
-            $("div#League").append(newTeam.attr("id",""));
-            newTeam.toggle(100);
+            $("div#TeamList")
+                .append($("div#BlankTeam")
+                    .clone(true)
+                    .attr("id","")
+                    .toggle());
         });
         
         
@@ -105,8 +119,5 @@
 }());
 
 
-var theLibraryKeeper = Object.create(League);
 
-theLibraryKeeper.addTeam("Madison SkyShine","Troy Haskin",4,9);
-theLibraryKeeper.addTeam("Picture of Boobs","Stephani Dalbesio",12,2);
-theLibraryKeeper.addTeam("Zust More Boobs" ,"Myla Dalbesio",12,2);
+
