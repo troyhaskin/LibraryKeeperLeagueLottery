@@ -30,6 +30,7 @@
                 <input type="text"     name="DraftPick"  value=""maxlength="2" />
                 <input type="checkbox" name="InLottery"  value=""maxlength="2" />
                 <input type="text"     name="PickChance" value="" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
+                <div class="ErrorIndicator"></div>
             </div>
             
             <div id="TeamList">
@@ -37,28 +38,30 @@
                     <div class="Label" id="TeamName">Team Name</div>
                     <div class="Label" id="DraftPick">Pick</div>
                     <div class="Label" id="InLottery">In Lottery</div>
-                    <div class="Label" id="PickChance"  style="color: rgba(0,0,0,0.1);">Odds</div>
+                    <div class="Label" id="PickChance">Odds</div>
                 </div>
-                <div class="Team" id="FirstTeam">
-                    <input type="button"   name="AddTeam"    value="+" title="Add a team"/>
-                    <input type="text"     name="TeamName"   value=""               />
+                <div class="Team">
+                    <input type="button"   name="RemoveTeam" value="&ndash;" title="Remove this team"/>
+                    <input type="text"     name="TeamName"   value="Team 1" style="color:rgba(0,0,0,0.35);"/>
                     <input type="text"     name="DraftPick"  value="" maxlength="2" />
                     <input type="checkbox" name="InLottery"  value="" maxlength="2" />
                     <input type="text"     name="PickChance" value="" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
+                    <div class="ErrorIndicator"></div>
                 </div>
             </div>
         </div>
         
-        <div class="Column" id="Lottery">
-            <div class="Overlay" style="height: 100%;"></div>
+        <div class="Column" id="Options">
             <div class="Header">
-                Draft Lottery
+                Draft Options
                <div style="width:100%;height:0.1em;background-color:black;">
+               </div>
             </div>
-            </div>
-            <input type="button" id="PerformLottery" value="Perform Draft Lottery" title="Invalid draft information for lottery." disabled="disabled"/>
-            <div id="PreLotteryInformation" style="display:none;">
-            </div>
+            <input type="button"   name="AddTeam"    value="Add a team" title="Add a team"/>
+            <input type="button" id="SortByDraft" value="Sort Teams by Pick" title="Invalid draft information for sorting" disabled="disabled"/>
+            <input type="button" id="PerformLottery" value="Perform Draft Lottery" title="Invalid draft information for lottery" disabled="disabled"/>
+            <div class="ErrorIndicator"></div>
+            <input type="button" id="ConfirmLottery" value="Confirm Draft Lottery" title="Confirm draft lottery" style="display:none;background-color:rgba(0, 255, 0, 0.5);margin-top:2em"/>
         </div>
         
     </body>

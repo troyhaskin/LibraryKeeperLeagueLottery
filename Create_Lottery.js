@@ -97,6 +97,26 @@ function Lottery() {
     }
     
     
+    
+    lottery.sampleNRounds = function (n,shuffle) {
+        if(n === undefined) {
+            n = 100;
+        }
+        if ( shuffle === undefined || shuffle !== false || shuffle !== true) {
+            shuffle = false;
+        }
+        
+        var outcome =[];
+        
+        for(var k = 0; k < n; k++){
+            outcome = this.performDrawingWithoutReplacement(shuffle);
+        }
+        
+        return outcome;
+        
+    }
+    
+    
     lottery.verifySampling = function (n,shuffle) {
         if(n === undefined) {
             n = 100;

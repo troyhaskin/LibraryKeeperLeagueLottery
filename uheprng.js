@@ -92,9 +92,27 @@ function uheprng() {
         // 'n' printable characters ranging from chr(33) to chr(126) inclusive.
         random.string = function( count ) {
             var i, s='';
-            for ( i=0; i<count; i++ ) s += String.fromCharCode( 33+random(94) );
+            for ( i=0; i<count; i++ ) s += String.fromCharCode( 33+random.range(94) );
             return s;
         };
+        
+        var webSafeCharacterCodes = [];
+        webSafeCharacterCodes.push(45);
+        webSafeCharacterCodes.push(95);
+        for(var k = 65; k < 91; k++) {
+            webSafeCharacterCodes.push(k);
+        }
+        for( k = 97; k < 123; k++) {
+            webSafeCharacterCodes.push(k);
+        }
+        random.safeString = function (count) {
+            var string = '';
+            for(var k = 0; k < count; k++) {
+                string += String
+                          .fromCharCode(webSafeCharacterCodes[random.range(54)]);
+            }
+            return string;
+        }
 
         // this PRIVATE "hash" function is used to evolve the generator's internal
         // entropy state. It is also called by the EXPORTED addEntropy() function

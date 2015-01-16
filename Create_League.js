@@ -113,7 +113,38 @@ function League() {
         return true;
         
     };
-    Object.seal(league);
+    
+    
+    league.removeTeam = function (name) {
+    
+        delete this.team[name];
+        
+        return true;
+        
+    };
+    
+    league.changeTeamName = function (oldName,newName) {
+    
+        if (this.team.hasOwnProperty(oldName)) {
+            var temp = this.team[oldName];
+            delete this.team[oldName];
+            this.team[newName] = temp;
+            return true;
+        } {
+            return false;
+        }
+
+    };
+    
+    league.teamExists = function (name) {
+    
+        if (this.team.hasOwnProperty(name)) {
+            return true;
+        } {
+            return false;
+        }
+
+    };
 
     return league;
 

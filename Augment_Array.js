@@ -58,5 +58,26 @@
         
         return array;
     }
+    
+    
+    Array.prototype.changeValue = function (oldValue,newValue) {
+        if ( this.indexOf(oldValue) !== -1) {
+            this[this.indexOf(oldValue)] = newValue;
+            return true;
+        }
+        return false;
+    }
+    
+    Array.prototype.definedCount = function () {
+        return this.filter(function (elem) {
+            return elem !== undefined;
+        }).length;
+    }
+    
+    Array.prototype.isDefined = function () {
+        return (this.filter(function (elem) {
+            return elem !== undefined;
+        }));
+    }
 
 }());
