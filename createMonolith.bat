@@ -14,6 +14,5 @@ type "theLibraryCnB.js"         >> Monolith.js"
 type "Application.js"           >> Monolith.js
 echo }());                      >> Monolith.js
 
+"C:\Program Files (x86)\Mozilla Firefox\firefox.exe" -new-tab .\Main.html
 
-Del "C:\Projects\LibraryKeeperLeagueLottery\Monolith.zip"
-"C:\Program Files (x86)\IZArc\IZArc.exe" -ad "C:\Projects\LibraryKeeperLeagueLottery\Monolith.js"
