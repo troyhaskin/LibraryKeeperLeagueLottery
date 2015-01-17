@@ -31,7 +31,7 @@ div#Information {
     text-align: center;
 }
 
-div#Options{
+div#Controls{
     width: 35%;
     float:right;
 }
@@ -108,29 +108,40 @@ div.ErrorIndicator {
     width: 90%;
     text-align: center;
     margin: 0 auto;
+    font-weight: bold;
 }
 
 
 /*  *************************************
              Lottery Column
     ************************************* */
-div#Options {
+div#Controls {
     position: relative;
     text-align: center;
 }
-div#Options div.Overlay {
-    position: absolute;
-    z-index: 1000;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background-color: rgba(255,255,255,0.8);
-}
-div#Options input{
+div#Controls input{
     display: block;
     margin: 0 auto 10px;
 }
-    
+
+
+div#Controls div.Log *{
+    font-size: 115%;
+    font-weight: bold;
+    margin: 0.4em auto;
+    padding: 0.5em;
+}
+
+div#Controls div.Log div.Warning{
+    color:black;
+    background-color: rgba(255,0,0,0.40);
+    border: 2px solid red;
+}
+div#Controls div.Log div.LotteryParticipants{
+    color:black;
+    background-color: rgba(0,255,0,0.40);
+    border: 2px solid green;
+}
     
     
 

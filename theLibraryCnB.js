@@ -57,9 +57,10 @@ var theLibCnB = (function () {
     });
     
     
-    theLib.putOnMenu(teamPrototype());
-    theLib.putOnMenu(leaguePrototype());
-    theLib.putOnMenu(draftPrototype());
+    theLib.putOnMenu(draftSpec());
+    theLib.putOnMenu(teamSpec());
+    theLib.putOnMenu(leagueSpec());
+    theLib.putOnMenu(lotterySpec());
 
     
     return theLib;

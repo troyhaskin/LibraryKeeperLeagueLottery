@@ -1,4 +1,4 @@
-function teamPrototype() {
+function teamSpec() {
 
     "use strict";
 
@@ -58,7 +58,7 @@ function teamPrototype() {
                 }
             },
             draftInformation: {
-                value:        makeObject(draftPrototype()),
+                value:        makeObject(draftSpec()),
                 configurable: false,
                 enumerable:   true,
                 writable:     false

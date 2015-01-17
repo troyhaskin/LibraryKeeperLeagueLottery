@@ -1,4 +1,4 @@
-function draftPrototype() {
+function draftSpec() {
 
     "use strict";
     

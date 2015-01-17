@@ -1,4 +1,4 @@
-function leaguePrototype() {
+function leagueSpec() {
 
     "use strict";
     
@@ -93,7 +93,7 @@ function leaguePrototype() {
             addTeam: function (name /*,Owner,Wins,Losses,Ties*/) {
                 
                     // Populate new Team instance
-                    var newTeam = makeObject(teamPrototype());
+                    var newTeam = makeObject(teamSpec());
                 
 
                     var ArgumentOrder = ["owner","wins","losses","ties"];

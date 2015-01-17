@@ -2,14 +2,17 @@
 
     "use strict";
     
-    var theLibraryLottery = Lottery();
+    var theLibraryLottery = theLibCnB.order("lottery");
         
     
-    for ( var k = 0; k < 50; k++) {
-        theLibraryLottery
-            .prng.addEntropy(theLibraryLottery
-                                .prng.string(16));
+    function addEntropyToLottery() {
+        for ( var k = 0; k < 50; k++) {
+            theLibraryLottery
+                .prng.addEntropy(theLibraryLottery
+                                    .prng.string(16));
+        }
     }
+
 
     (function ($){
         
@@ -107,7 +110,7 @@
         
             
             $("div#TeamList")
-                .append($(newTeam).toggle());
+                .append($(newTeam).show(100,'linear'));
         });
         
         
@@ -144,18 +147,12 @@
         function checkDraftStatus() {
             var pickCount   = draftPicks.definedCount(),
                 chanceCount = Object.keys(lotteryChances).length,
-                canSort     = pickCount   >= 1,
-                canLottery  = chanceCount >  1;
+                canLottery  = chanceCount >  1,
+                canSort     = (pickCount   >= 1) || canLottery;
                 
             toggleOptionButtons(canSort,canLottery);
         }
         function toggleOptionButtons(canSort,canLottery) {
-            if (canSort || canLottery) {
-                $("div#Options > div.Overlay").hide();
-            } else {
-                $("div#Options > div.Overlay").show();
-            }
-            
             if (canSort) {
                 $("input#SortByDraft").removeAttr("disabled");
             } else {
@@ -163,9 +160,9 @@
             }
             
             if (canLottery) {
-                $("input#PerformLottery").removeAttr("disabled");
+                $("input#ConfirmDraftInformation").removeAttr("disabled");
             } else {
-                $("input#PerformLottery").attr("disabled","disabled");
+                $("input#ConfirmDraftInformation").attr("disabled","disabled");
             }
             
         }
@@ -313,7 +310,7 @@
                     $(this)
                         .css("background-color","rgba(255,0,0,0.35)")
                         .siblings("div.ErrorIndicator")
-                            .html("Odd must be a number between 0 and 1.")
+                            .html("The chance of a pick must be a strictly positive number.")
                             .show();
                     
                     return false;
@@ -339,38 +336,41 @@
            ******************************************* */
     
         $("input#SortByDraft").click(function () {
-            // $("div#TeamList").hide(100);
             
             // Pull out the Teams either with a Pick or Chance
             var idSelector = "#" + draftPicks.isDefined()
                                    .concat(Object.keys(lotteryChances))
-                                   .join(',#');
-            var children = $("div#TeamList").children(idSelector).detach();
+                                   .join(',#'),
+                children = $("div#TeamList")
+                            .children(idSelector)
+                                .detach(),
+                sortedIDs = [];
+            /*
+                Sort lottery team IDs
+            */
+            if (Object.keys(lotteryChances).length > 0) {
+                var idChancePair = Object.keys(lotteryChances)
+                                .map(function (id) {
+                                    return {id:id,value:lotteryChances[id]};
+                                });
+                idChancePair.sort(function (a,b){return -(a.value - b.value)});
+
+                sortedIDs = idChancePair.map(function (elem) {
+                    return (elem.id);
+                });
+            }
 
             /*
-                First insert lottery teams into the 
-                draft order sorted by chance.
+                Draft picks are sorted by default
             */
-            var idChancePair = Object.keys(lotteryChances)
-                            .map(function (id) {
-                                return {id:id,value:lotteryChances[id]};
-                            });
-            idChancePair.sort(function (a,b){return -(a.value - b.value)});
-            idChancePair.forEach(function (elem) {
-                $("div#TeamList")
-                    .append($(children).filter("#"+elem.id));
-            });
-
+            sortedIDs = sortedIDs.concat(draftPicks.isDefined());
+            
             /*
-                Then insert sorted draft picks
+                Reinsert into DOM and show
             */
-            console.log(draftPicks.isDefined());
-            var temp = draftPicks.isDefined();
-            temp.forEach(function (id) {
-                console.log("#"+id);
-                $("div#TeamList")
-                    .append($(children).filter("#"+id));
-            });
+            $("div#TeamList").hide()
+                .append($(children).filter("#"+sortedIDs.join(",#")));
+            
         });
 
 
@@ -379,62 +379,107 @@
         /* *******************************************
                           Perform Lottery
            ******************************************* */
-        $("input#PerformLottery").click(function () {
+        $("input#ConfirmDraftInformation").click(function () {
             var teamCount   = $("div#TeamList > div.Team").length,
                 pickCount   = draftPicks.definedCount(),
                 chanceCount = Object.keys(lotteryChances).length;
                 
+            // Check for well-posedness
             if (teamCount !== (pickCount + chanceCount)) {
-                $("div#Options > div.ErrorIndicator")
-                    .html("WARNING: draft line-up is not well-posed.")
+                $("div#Controls div#IllPosedDraft")
                     .show();
             } else {
-                $("div#Options > div.ErrorIndicator")
-                    .html("")
+                $("div#Controls div#IllPosedDraft")
                     .hide();
             }
             
             
+            // 
+            var minExplicitPick = 1E8;
+            for(var k = 0; k < draftPicks.length; k++) {
+                if (draftPicks[k] !== undefined) {
+                    minExplicitPick = k;
+                    break;
+                }
+            }
+
+            if (minExplicitPick <= chanceCount) {
+                // Pad draftPicks array
+                var pad = [];
+                pad[chanceCount-minExplicitPick] = undefined;
+                draftPicks = pad.concat(draftPicks);
+                
+                // Update draft pick values
+                draftPicks.forEach( function (id,pick) {
+                    $("#"+id)
+                        .children("[name='DraftPick']")
+                            .val(pick);
+                });
+                
+                // Show log
+                $("div#Controls div#IncrementedExplicitPicks")
+                    .show();
+            } else {
+                $("div#Controls div#IncrementedExplicitPicks")
+                    .hide();
+            }
+            
+            
+            // Highlight the lottery teams
             Object.keys(lotteryChances).forEach(function (id) {
                 $("div#"+id)
                     .css("border-radius","1em")
-                    .css("box-shadow","inset 0 0 1em 0.3em rgba(0,255,0,0.70)");
+                    .css("background-color","rgba(0,255,0,0.40)")
+                    .css("border","2px solid green");
             });
-            $("input#ConfirmLottery").show();
+            
+            // Activate button and show log information
+            $("input#PerformLottery").removeAttr("disabled");
+            $("div#Controls div.Log div.LotteryParticipants").show();
 
         });
         
         
-        $("input#ConfirmLottery").click(function () {
+        
+        $("input#PerformLottery").click(function () {
+        
+            addEntropyToLottery();
 
-        // An array that orders the object
+        // An array that serializes the object into an array.
         var idChancePair = Object.keys(lotteryChances)
                         .map(function (id) {
                             return {id:id,value:lotteryChances[id]};
                         }),
             Chances = idChancePair.map(function (kv){return kv.value});
             
+            // Set the chances
             theLibraryLottery.percentages = Chances;
             
-            var lotteryResults     = theLibraryLottery.sampleNRounds(500,true),
-                lotteryTeamResults = [];
+            var lotteryResults = theLibraryLottery.sampleNRounds(1000,true),
+                lotteryIDs     = [];
 
-            lotteryResults.forEach(function (team,pick) {
-                lotteryTeamResults.push({
-                    id: idChancePair[team].id,
-                    pick:   pick+1
-                });
+            lotteryIDs = lotteryResults.map(function (chosenIndex) {
+                return idChancePair[chosenIndex].id;
             });
             
             
-            lotteryTeamResults.forEach(function (elem) {
-                $("#"+elem.id)
+            // Sort elements by  pick
+            var previousElement = "div#InputHeaders",
+                theID = '',
+                team;
+            lotteryIDs.forEach(function (id,pick) {
+                theID = "#"+id;
+                team = $(theID).detach();
+                $(previousElement).after(team);
+                previousElement = theID;
+            });
+            
+            // Pick value to lottery one
+            lotteryIDs.forEach(function (id,pick) {
+                $("#"+id)
                     .children("[name='DraftPick']")
-                    .val(elem.pick);
+                        .val(pick+1);
             });
-            
-            console.log(lotteryTeamResults);
-            
         });
         
         

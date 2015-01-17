@@ -52,17 +52,27 @@
             </div>
         </div>
         
-        <div class="Column" id="Options">
+        <div class="Column" id="Controls">
             <div class="Header">
-                Draft Options
+                Draft Controls
                <div style="width:100%;height:0.1em;background-color:black;">
                </div>
             </div>
             <input type="button"   name="AddTeam"    value="Add a team" title="Add a team"/>
             <input type="button" id="SortByDraft" value="Sort Teams by Pick" title="Invalid draft information for sorting" disabled="disabled"/>
-            <input type="button" id="PerformLottery" value="Perform Draft Lottery" title="Invalid draft information for lottery" disabled="disabled"/>
-            <div class="ErrorIndicator"></div>
-            <input type="button" id="ConfirmLottery" value="Confirm Draft Lottery" title="Confirm draft lottery" style="display:none;background-color:rgba(0, 255, 0, 0.5);margin-top:2em"/>
+            <input type="button" id="ConfirmDraftInformation" value="Confirm Draft Information" title="Confirm Draft Information" disabled="disabled" />
+            <input type="button" id="PerformLottery" value="Perform Draft Lottery" title="Invalid draft information for lottery"  disabled="disabled"/>
+            <div class="Log" style="display:;">
+                <div class="Warning" id="IllPosedDraft" style="display:none;">
+                    Draft line-up is not well-posed.
+                </div>
+                <div class="Warning" id="IncrementedExplicitPicks" style="display:none;">
+                    Explicit draft picks in the range of lottery picks have been incremented such that no conflict exists.
+                </div>
+                <div class="LotteryParticipants" style="display:none;">
+                    Lottery participants are highlighted in green.
+                </div>
+            </div>
         </div>
         
     </body>
