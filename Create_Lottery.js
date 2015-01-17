@@ -3,6 +3,7 @@ function Lottery() {
     "use strict";
 
     var percentages = [];
+    
     var lottery = Object.create(null,{
         prng: {
             value: uheprng(),
