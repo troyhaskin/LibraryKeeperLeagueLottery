@@ -490,18 +490,3 @@
     return true;
 
 }());
-
-
-
-var theLibKeeper = theLibCnB.order("league");
-
-
-theLibKeeper.addTeam("Madison SkyShine","Troy Haskin",4,9);
-theLibKeeper.addTeam("Picture of Boobs","Stephani Dalbesio",12,2);
-theLibKeeper.addTeam("Zust More Boobs" ,"Myla Dalbesio",12,2);
-
-
-theLibKeeper.team["Madison SkyShine"].draftInformation.draftPick = 1;
-theLibKeeper.team["Picture of Boobs"].draftInformation.draftPick = 3;
-theLibKeeper.team["Zust More Boobs"].draftInformation.draftPick = 2;
-
