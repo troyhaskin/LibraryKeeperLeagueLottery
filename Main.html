@@ -11,8 +11,8 @@
         
         <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
         <meta http-equiv="Content-Script-Type" content="text/javascript" />
-        <link rel="stylesheet" type="text/css" href="Style.css">        
-        <script src="./Monolith.js" defer ></script>
+        <link rel="stylesheet" type="text/css" href="Style.css" />        
+        <script type="text/javascript" src="./Monolith.js" defer="defer" ></script>
     
     </head>
 
@@ -25,10 +25,10 @@
             </div>
             
             <div class="Team" id="BlankTeam">
-                <input type="button"   name="RemoveTeam" value="&ndash;" title="Remove this team"/>
-                <input type="text"     name="TeamName"       value=""/>
-                <input type="text"     name="DraftPick"  value=""maxlength="2" />
-                <input type="checkbox" name="InLottery"  value=""maxlength="2" />
+                <input type="button"   name="RemoveTeam" value="&ndash;" title="Remove this team" />
+                <input type="text"     name="TeamName"   value="" />
+                <input type="text"     name="DraftPick"  value="" maxlength="2" />
+                <input type="checkbox" name="InLottery"  value="" maxlength="2" />
                 <input type="text"     name="PickChance" value="" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
                 <div class="ErrorIndicator"></div>
             </div>
@@ -41,11 +41,11 @@
                     <div class="Label" id="PickChance">Odds</div>
                 </div>
                 <div class="Team">
-                    <input type="button"   name="RemoveTeam" value="&ndash;" title="Remove this team"/>
-                    <input type="text"     name="TeamName"   value="Team 1" style="color:rgba(0,0,0,0.35);"/>
+                    <input type="button"   name="RemoveTeam" value="&ndash;" title="Remove this team" />
+                    <input type="text"     name="TeamName"   value="Team 1" style="color:rgba(0,0,0,0.35);" />
                     <input type="text"     name="DraftPick"  value="" maxlength="2" />
                     <input type="checkbox" name="InLottery"  value="" maxlength="2" />
-                    <input type="text"     name="PickChance" value="" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
+                    <input type="text"     name="PickChance" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
                     <div class="ErrorIndicator"></div>
                 </div>
             </div>
