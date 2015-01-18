@@ -29,7 +29,7 @@
                 <input type="text"     name="TeamName"   value="" />
                 <input type="text"     name="DraftPick"  value="" maxlength="2" />
                 <input type="checkbox" name="InLottery"  value="" maxlength="2" />
-                <input type="text"     name="PickChance" value="" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
+                <input type="text"     name="PickChance" value="" disabled="disabled" />
                 <div class="ErrorIndicator"></div>
             </div>
             
@@ -45,7 +45,7 @@
                     <input type="text"     name="TeamName"   value="Team 1" style="color:rgba(0,0,0,0.35);" />
                     <input type="text"     name="DraftPick"  value="" maxlength="2" />
                     <input type="checkbox" name="InLottery"  value="" maxlength="2" />
-                    <input type="text"     name="PickChance" disabled="disabled" style="background-color:rgba(0,0,0,0.1);" />
+                    <input type="text"     name="PickChance" disabled="disabled"/>
                     <div class="ErrorIndicator"></div>
                 </div>
             </div>
@@ -61,14 +61,14 @@
             <input type="button" id="SortByDraft" value="Sort Teams by Pick" title="Invalid draft information for sorting" disabled="disabled"/>
             <input type="button" id="ConfirmDraftInformation" value="Confirm Draft Information" title="Confirm Draft Information" disabled="disabled" />
             <input type="button" id="PerformLottery" value="Perform Draft Lottery" title="Invalid draft information for lottery"  disabled="disabled"/>
-            <div class="Log" style="display:;">
+            <div class="Log">
                 <div class="Warning" id="IllPosedDraft" style="display:none;">
                     Draft line-up is not well-posed.
                 </div>
                 <div class="Warning" id="IncrementedExplicitPicks" style="display:none;">
                     Explicit draft picks in the range of lottery picks have been incremented such that no conflict exists.
                 </div>
-                <div class="LotteryParticipants" style="display:none;">
+                <div class="Help LotteryHighlight" id="HighlightParticipants" style="display:none;">
                     Lottery participants are highlighted in green.
                 </div>
             </div>

@@ -1202,14 +1202,12 @@ var theLibCnB = (function () {
             // Highlight the lottery teams
             Object.keys(lotteryChances).forEach(function (id) {
                 $("div#"+id)
-                    .css("border-radius","1em")
-                    .css("background-color","rgba(0,255,0,0.40)")
-                    .css("border","2px solid green");
+                    .addClass("LotteryHighlight");
             });
             
             // Activate button and show log information
             $("input#PerformLottery").removeAttr("disabled");
-            $("div#Controls div.Log div.LotteryParticipants").show();
+            $("div#HighlightParticipants").show();
 
         });
         

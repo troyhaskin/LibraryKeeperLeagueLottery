@@ -90,6 +90,10 @@ div.Team input[name="PickChance"], div#PickChance {
     text-align: center;
 }
 
+input[disabled="disabled"] {
+    background-color:rgba(0,0,0,0.1);
+}
+
 div#TeamList {
     width: 85%;
     margin: 0 auto;
@@ -112,9 +116,10 @@ div.ErrorIndicator {
 }
 
 div.LotteryHighlight {
-    color:black;
-    background-color: rgba(0,255,0,0.25);
-    border: 2px solid green;
+    color:              black;
+    background-color:   rgba(0,255,0,0.25);
+    border:             0.05em solid green;
+    border-radius:      1em;
 }
 
 
@@ -143,9 +148,6 @@ div#Controls div.Log div.Warning{
     background-color: rgba(255,0,0,0.40);
     border: 2px solid red;
 }
-div#Controls div.Log div.LotteryParticipants{
 
-}
-    
     
 
