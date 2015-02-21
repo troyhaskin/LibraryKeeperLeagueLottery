@@ -58,7 +58,13 @@
            ******************************************* */
         var teamNoNameCount = 1;
         $("[name='TeamName']").focus(function () {
-            $(this).val("");
+        
+            var teamName = $(this).val().trim();
+            if ($(this).hasClass("DefaultName")) {
+                $(this).val("");
+            }
+            $(this).css("color","rgb(0,0,0)");
+
         });
         
         
@@ -67,13 +73,14 @@
            ******************************************* */
         $("[name='TeamName']").blur(function () {
         
-            var teamName    = $(this).val().trim()
+            var teamName = $(this).val().trim();
             
             if (teamName === "") {
                 teamNoNameCount += 1;
                 $(this)
                     .val("Team " + teamNoNameCount)
-                    .css("color","rgba(0,0,0,0.35)");
+                    .css("color","rgba(0,0,0,0.35)")
+                    .addClass("DefaultName");
                 
                 return false;
             }
@@ -81,7 +88,9 @@
             // Update non-empty value
             var oldTeamName = $(this).parent().attr("title") || "";
             
-            $(this).removeAttr("style");
+            $(this)
+                .css("color","rgba(0,0,0,1)")
+                .removeClass("DefaultName");
             
             if (oldTeamName === "") {
                 $(this).parent().attr("title",teamName);
@@ -161,8 +170,10 @@
             
             if (canLottery) {
                 $("input#ConfirmDraftInformation").removeAttr("disabled");
+                $("input#PerformLottery").removeAttr("disabled");
             } else {
                 $("input#ConfirmDraftInformation").attr("disabled","disabled");
+                $("input#PerformLottery").attr("disabled","disabled");
             }
             
         }
@@ -191,8 +202,9 @@
                 disableName  = "PickChance" ;
                 enableName   = "DraftPick"  ;
                 
-                // Remove lottery chance (if exist)
+                // Remove lottery chance (if exist) and highlight
                 delete lotteryChances[teamID];
+                $(this).parent().removeClass("LotteryHighlight");
 
             }
 
