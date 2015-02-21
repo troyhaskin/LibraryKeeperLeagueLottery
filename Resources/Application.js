@@ -368,8 +368,10 @@
             /*
                 Reinsert into DOM and show
             */
-            $("div#TeamList").hide()
-                .append($(children).filter("#"+sortedIDs.join(",#")));
+            $("div#TeamList")
+                .hide()
+                .append($(children).filter("#"+sortedIDs.join(",#")))
+                .show();
             
         });
 
