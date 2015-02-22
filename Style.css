@@ -1,7 +1,8 @@
 html {
-    width: 100%;
-    height: 100%;
-    font-size: 100%;
+    width: vmax;
+    min-width: 1000px;
+    height: vmax;
+    font-size: 1.3vw;
     z-index:    1;
 }
 
@@ -11,13 +12,9 @@ html {
 }
 
 body {
-    width: 95%;
+    width: 95vw;
     margin: 0 auto;
     padding: 0;
-}
-
-body, body * {
-    font-size: 98%;
 }
 
 
@@ -38,8 +35,8 @@ div#Controls{
 div.Header {
     text-align: center;
     font-weight: bold;
-    font-size:130%;
-    margin-bottom: 0.20em;
+    font-size:1.5em;
+    margin-bottom: 0.9vw;
 }
 
 
