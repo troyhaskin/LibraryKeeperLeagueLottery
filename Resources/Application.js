@@ -63,7 +63,7 @@
             if ($(this).hasClass("DefaultName")) {
                 $(this).val("");
             }
-            $(this).css("color","rgb(0,0,0)");
+            $(this).css("color","rgba(0,0,0,1)");
 
         });
         
@@ -98,7 +98,7 @@
                 if (teamName !== oldTeamName) {
                     $(this).parent().attr("title",teamName);
                 }
-            } 
+            }
         });
         
         
@@ -354,23 +354,27 @@
                                    .concat(Object.keys(lotteryChances))
                                    .join(',#'),
                 children = $("div#TeamList")
-                            .children(idSelector)
-                                .detach(),
+                                .children(idSelector)
+                                    .detach(),
                 sortedIDs = [];
+
+
             /*
                 Sort lottery team IDs
             */
             if (Object.keys(lotteryChances).length > 0) {
-                var idChancePair = Object.keys(lotteryChances)
-                                .map(function (id) {
-                                    return {id:id,value:lotteryChances[id]};
-                                });
+                var idChancePair = 
+                    Object.keys(lotteryChances)
+                        .map(function (id) {
+                            return {id:id,value:lotteryChances[id]};
+                        });
                 idChancePair.sort(function (a,b){return -(a.value - b.value)});
 
                 sortedIDs = idChancePair.map(function (elem) {
                     return (elem.id);
                 });
             }
+
 
             /*
                 Draft picks are sorted by default
@@ -380,10 +384,12 @@
             /*
                 Reinsert into DOM and show
             */
-            $("div#TeamList")
-                .hide()
-                .append($(children).filter("#"+sortedIDs.join(",#")))
-                .show();
+            $("div#TeamList").hide(100);
+            $.each( sortedIDs, function (index,value) {
+                $(children).filter("#"+value).appendTo("div#TeamList");
+                // console.log(value);
+            });
+            $("div#TeamList").show(100);
             
         });
 
@@ -448,6 +454,9 @@
             // Activate button and show log information
             $("input#PerformLottery").removeAttr("disabled");
             $("div#HighlightParticipants").show();
+            
+            console.log(draftPicks);
+            console.log(Object.keys(lotteryChances));
 
         });
         
